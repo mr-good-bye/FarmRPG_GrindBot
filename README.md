@@ -1,5 +1,7 @@
 ## TODO:
 
-- [ ] Add cow petting
+- [X] Chickens and cow petting
 - [ ] Add constants
-- [ ] **BIG**
+- [ ] |**BIG**| plant selected
+- [ ] |**BIG**| explore
+- [ ] |**BIG**| fishing

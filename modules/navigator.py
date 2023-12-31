@@ -11,6 +11,7 @@ class Page(StrEnum):
     index = 'https://farmrpg.com/index.php'
     farm = 'farm'
     coop = 'coop'
+    pasture = 'pasture'
 
 
 class Navigator:
@@ -25,6 +26,8 @@ class Navigator:
             self._coop()
         elif page.value == 'farm':
             self._farm()
+        elif page.value == 'pasture':
+            self._pasture()
         self.logger.log('debug', f'Navigated to {page.name}', 'Navigator')
 
     def _coop(self):
@@ -37,5 +40,11 @@ class Navigator:
         self.go_to(Page.index)
         time.sleep(.5)
         self.driver.find_element(By.XPATH, ".//a[contains(@href, 'xfarm.php')]").click()
+        time.sleep(.5)
+
+    def _pasture(self):
+        self.go_to(Page.farm)
+        time.sleep(.5)
+        self.driver.find_element(By.XPATH, ".//a[contains(@href, 'pasture')]").click()
         time.sleep(.5)
 

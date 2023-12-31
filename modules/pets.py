@@ -14,6 +14,10 @@ class Pets:
         self.logger = logger
         self.nav = Navigator(self.driver, self.logger)
 
+    def _click(self, el):
+        self.driver.execute_script("arguments[0].scrollIntoView();", el)
+        el.click()
+
     def check_coop(self):
         self.nav.go_to(Page.farm)
         if self.driver.find_elements(By.XPATH, './/a[contains(@href, "coop")]//*[contains(text(),"today")]'):
@@ -41,7 +45,7 @@ class Pets:
             )
             if len(chicks) == 0:
                 break
-            chicks[0].click()
+            self._click(chicks[0])
             time.sleep(.5)
             self.driver.find_element(
                 By.XPATH,
@@ -49,7 +53,34 @@ class Pets:
             ).click()
             time.sleep(.5)
             self.driver.find_element(By.XPATH, ".//span[text()='OK']").click()
-            time.sleep(.5)
+            time.sleep(.5+.2)
         self.logger.log('pet', 'Finished petting chickens', 'Pets')
+
+    def pet_pasture(self):
+        self.nav.go_to(Page.pasture)
+        num = self.driver.find_elements(
+                By.XPATH,
+                ".//span[contains(@style, 'red')]/parent::*/parent::*/a[contains(@href, 'namecow.php')]"
+            ).__len__()
+        if num == 0:
+            return
+        self.logger.log('pet', f'Number of cows to pet: {num}', 'Pets')
+        while True:
+            chicks = self.driver.find_elements(
+                By.XPATH,
+                ".//span[contains(@style, 'red')]/parent::*/parent::*/a[contains(@href, 'namecow.php')]"
+            )
+            if len(chicks) == 0:
+                break
+            self._click(chicks[0])
+            time.sleep(.5)
+            self.driver.find_element(
+                By.XPATH,
+                ".//div[contains(text(), 'Pet Cow')]/./parent::div/parent::div/parent::a"
+            ).click()
+            time.sleep(.5)
+            self.driver.find_element(By.XPATH, ".//span[text()='OK']").click()
+            time.sleep(.5+.5)
+        self.logger.log('pet', 'Finished petting cows', 'Pets')
 
 

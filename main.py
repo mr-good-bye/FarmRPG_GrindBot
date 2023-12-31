@@ -10,6 +10,9 @@ if __name__ == '__main__':
     pets = modules.Pets(driver, logger)
     auth()
     if pets.check_coop():
-        print("Petting")
+        print("Petting chickens")
         pets.pet_coop()
+    if pets.check_pasture():
+        print("Petting cows")
+        pets.pet_pasture()
     auth.logout()
